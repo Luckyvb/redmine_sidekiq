@@ -9,5 +9,12 @@ Redmine::Plugin.register :redmine_sidekiq do
   author_url 'mailto:ogom@hotmail.co.jp'
   author 'ogom'
 
-  menu :top_menu, :sidekiq, '/sidekiq', :if => Proc.new {User.current.admin}
+  I18n.load_path += Dir[Rails.root.join("config","locales","*.yml")]
+  I18n.load_path += Dir[Rails.root.join("plugins","redmine_sidekiq","config","locales","*.yml")]
+  I18n.locale = !User.current.language.blank? ? User.current.language : Setting.default_language
+  if Redmine::Plugin::registered_plugins.include?(:fontawesome)
+    menu :top_menu, :sidekiq, '/sidekiq', :caption => '', :html => {:class => 'fa fa-stream', :title => I18n.t('redmine_sidekiq.title') }, :after => :projects, :if => Proc.new {User.current.admin}
+  else
+    menu :top_menu, :sidekiq, '/sidekiq', :caption => :sidekiq, :html => {:class => 'icon icon-only icon-plugins', :title => 'SideKiq'}, :after => :projects, :if => Proc.new {User.current.admin}
+  end
 end

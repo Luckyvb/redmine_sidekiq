@@ -1,2 +1,4 @@
 ru:
   sidekiq: "Фоновые задачи"
+  redmine_sidekiq:
+    title: "Фоновые задачи"

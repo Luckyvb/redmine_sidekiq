@@ -1,2 +1,4 @@
 en:
   sidekiq: Sidekiq
+  redmine_sidekiq:
+    title: "Sidekiq"
